@@ -11,6 +11,7 @@ collector = {'N':0, 'E':0, 'S':0, 'W':0}
 directions = []
 visited = [(0,0)]
 
+# Process directions to count up all movement:
 for step in inlist:
     # Rotate R or L:
     if step[0] == 'R':
@@ -40,6 +41,7 @@ def testLoc(myloc):
     else:
         visited.append(myloc)
 
+# Step by step, visit and check each location:
 def findCrossover():
     myloc = (0,0)
     # Track points visited:
