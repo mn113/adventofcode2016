@@ -33,7 +33,7 @@ def findNextCharacter():
         pass
 
 # Start solving:
-while password.index(None) > 0:
+while password.count(None) > 0:
     findNextCharacter()
 
 print ''.join(password), "is the password"
