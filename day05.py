@@ -3,8 +3,11 @@
 
 import hashlib
 
+if 0:
+    print "0 True"
+
 doorid = "ugkcyxxp"
-password = []
+password = [None] * 8
 incr = 0
 
 def findNextCharacter():
@@ -19,12 +22,18 @@ def findNextCharacter():
         incr = incr + 1
 
     # Store result:
-    if h[5]:
-        print "FOUND", h, incr
-        password.append(h[5])
+    try:
+        if int(h[5]) in range(8):
+            idx = int(h[5])
+            if password[idx] is None:
+                #print "FOUND", h, incr
+                password[idx] = h[6]
+                print password, incr
+    except ValueError:
+        pass
 
 # Start solving:
-while len(password) < 8:
+while password.index(None) > 0:
     findNextCharacter()
 
 print ''.join(password), "is the password"
