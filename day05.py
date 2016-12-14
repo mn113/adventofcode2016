@@ -3,9 +3,6 @@
 
 import hashlib
 
-if 0:
-    print "0 True"
-
 doorid = "ugkcyxxp"
 password = [None] * 8
 incr = 0
