@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-# Circle of elves stealing presents
+# Circle of elves stealing presents (Josephus problem)
 
 # <- presents
 # 1 1 1 1 1
@@ -40,46 +40,23 @@ while 1:
 print "---"
 
 # Part 2
-import math
-import sys
+# x = 3014603
+# Brute-force solving is too slow.
+# Analysis of solutions for circles of 5-1000 revealed a repeating arithmetic progression
+#  based on intervals of powers of 3
+# Two simple formulas predict the winner for any input size
 
-elves = {k:1 for k in range(3014603)}
-l = len(elves.keys())
-orig_l = l
+powers_of_3 = [3**t for t in range(15)]
 
-'''
-instead of dict {1:1, 2:1, ...}
-could use array of seating positions: [1,2,3,4,5]
-presents not counted
-'''
+def josephus_formula(x):
+    lower3 = max([p for p in powers_of_3 if p < x])
+    upper3 = min([p for p in powers_of_3 if p >= x])
+    # Apply formula to 2 tranches:
+    if x <= 2 * lower3:
+        y = x - lower3 - 1
+    else:
+        y = (2 * x) - (3 * lower3) - 1
+    return y
 
-k = 0
-while l > 1:
-    #print elves.keys(), l, "elves"
-    #print "#", k, "to pick"
-
-    # Find opposite seated elf:
-    dist = math.floor(l/2)
-    k_index = elves.keys().index(k)     # slow part?
-    opp_index = int(k_index + dist) % l
-    #print opp_index, "to lose",
-
-    # Steal presents:
-    victimKey = elves.keys()[opp_index]
-    #print "(Elf", victimKey, ")"
-    elves[k] = elves[k] + elves[victimKey]
-
-    # Kick presentless elf:
-    del elves[victimKey]
-    l = l-1
-
-    # Move ahead to next elf (looping round):
-    k = (k+1)%orig_l
-    while k not in elves.keys():
-        k = (k+1)%orig_l
-
-    # Live output of length to screen:
-    sys.stdout.write("Elves remaining: %d%   \r" % (l) )
-    sys.stdout.flush()
-
-print "Part 2:", elves
+x = 3014603
+print "Part 2:", x, "elves,", josephus_formula(x), "th elf wins"
