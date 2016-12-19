@@ -22,7 +22,7 @@ def checkDoors(location, movesSoFar):
     print movesSoFar
 
     # End conditions:
-    if len(movesSoFar) > 886:  # 886 too high!
+    if len(movesSoFar) > 600:  # 600 too high!
         #return
         print len(longestRoute)
         sys.exit()
