@@ -50,7 +50,6 @@ powers_of_3 = [3**t for t in range(15)]
 
 def josephus_formula(x):
     lower3 = max([p for p in powers_of_3 if p < x])
-    upper3 = min([p for p in powers_of_3 if p >= x])
     # Apply formula to 2 tranches:
     if x <= 2 * lower3:
         y = x - lower3 - 1
