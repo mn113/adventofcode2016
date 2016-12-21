@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # Decompress a text according to (AxB) markers
 
+import string
 import re
 # Regex for matching '(3x4)':
 p = re.compile('\(([0-9]+)x([0-9]+)\)')
@@ -43,10 +44,11 @@ while 1:
 
 print pieces
 print sum(pieces)
-
+print "---"
 
 # Loop 2:
-inputtext = 'X(8x2)(3x3)ABCY'
+inputtext = '(7x10)(1x12)A'
+#inputtext = open('day09_input.txt').readline()
 pieces = []
 multiplier = 1
 while 1:
@@ -56,22 +58,30 @@ while 1:
         # No more matches: remaining text must be counted
         pieces.append(len(inputtext))
         break
+
     # Count any characters preceding marker:
     pieces.append(m.start())
+
     # Analyse marker:
-    print m.start(), ':', m.group(1), 'x', m.group(2), '(*', multiplier, ')'
+    print m.start(), m.end(), ':', m.group(1), 'x', m.group(2), '(*', multiplier, ')'
     print inputtext[:m.end()]
     length = int(m.group(1))
     times = int(m.group(2))
-    # Count repeated sequence length:
-    pieces.append(length * times * multiplier)
-    multiplier = multiplier * times
-    # Cut marker itself off inputtext:
-    inputtext = inputtext[m.end():]
+    text = inputtext[m.end():m.end()+length]
+    print text
+    chars = len([c for c in text if c in list(string.ascii_uppercase)])
+
     # Look ahead for absence of other markers:
     if p.search(inputtext[:length]) == None:
+        # If no more markers inside, multiply out:
+        # Count repeated sequence length:
+        multiplier = multiplier * times
+        pieces.append(chars * multiplier)
         # Only letters - reset:
         multiplier = 1
+
+    # Cut marker itself off inputtext:
+    inputtext = inputtext[m.end():]
 
 print pieces
 print sum(pieces)
