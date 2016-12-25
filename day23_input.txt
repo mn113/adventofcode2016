@@ -1,0 +1,26 @@
+cpy a b
+dec b
+cpy a d
+cpy 0 a
+PASS
+PASS
+ADD b a d
+ZER c
+ZER d
+PASS
+dec b
+cpy b c
+cpy c d
+PASS
+ADD d c
+ZER d
+tgl c
+cpy -16 c
+jnz 1 c
+cpy 81 c
+PASS
+PASS
+PASS
+ZER d
+inc c
+jnz c -5

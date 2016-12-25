@@ -1,20 +1,26 @@
 #! /usr/bin/env python
-# Find bot which compares two chip numbers
-
-import time
+# Find input which generates 01010101... output
 
 def runInstructions():
-    with open('day12_input.txt') as fp:
+    global registers
+    output = []
+    correct8 = [[0,1,0,1,0,1,0,1,0,1,0,1], [1,0,1,0,1,0,1,0,1,0,1,0]]
+    with open('day25_input.txt') as fp:
         lines = fp.readlines()
         l = len(lines)
         i = 0
         while i < l:
             line = lines[i]
-            #print i, '/', l, ':', line
             words = line.split()
 
             if words[0] == 'out':
-                print registers[words[1]],
+                output.append(registers[words[1]])
+                if len(output) >= 12:
+                    print output
+                    if output[:12] in correct8:
+                        return True
+                    else:
+                        return False
 
             if words[0] == 'inc':
                 reg = words[1]
@@ -61,7 +67,9 @@ def runInstructions():
             i = i + 1
 
 registers = {x:0 for x in 'abcd'}
+
 for q in range(1000):
     registers['a'] = q
     print "--- a =", q, "---"
-    runInstructions()
+    if runInstructions() == True:
+        break
